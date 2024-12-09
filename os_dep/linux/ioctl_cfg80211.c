@@ -438,7 +438,11 @@ u8 rtw_cfg80211_ch_switch_notify(_adapter *adapter, u8 ch, u8 bw, u8 offset, u8 
 
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 19, 0))
 	if (started) {
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(6, 1, 0))
+
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(6, 8, 0))
+		cfg80211_ch_switch_started_notify(adapter->pnetdev, &chdef, 0, 0, false,0);
+
+#elif (LINUX_VERSION_CODE >= KERNEL_VERSION(6, 1, 0))
 		cfg80211_ch_switch_started_notify(adapter->pnetdev, &chdef, 0, 0, false);
 #elif (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 11, 0) || RHEL_RELEASE_CODE >= RHEL_RELEASE_VERSION(8, 5))
 		cfg80211_ch_switch_started_notify(adapter->pnetdev, &chdef, 0, false);
@@ -452,7 +456,10 @@ u8 rtw_cfg80211_ch_switch_notify(_adapter *adapter, u8 ch, u8 bw, u8 offset, u8 
 	if (!rtw_cfg80211_allow_ch_switch_notify(adapter))
 		goto exit;
 
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 19, 2))
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(6, 8, 0))
+	cfg80211_ch_switch_notify(adapter->pnetdev, &chdef, 0,0);
+
+#elif (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 19, 2))
 	cfg80211_ch_switch_notify(adapter->pnetdev, &chdef, 0);
 #else
 	cfg80211_ch_switch_notify(adapter->pnetdev, &chdef);
@@ -5093,19 +5100,34 @@ static int cfg80211_rtw_start_ap(struct wiphy *wiphy, struct net_device *ndev,
 exit:
 	return ret;
 }
-
 static int cfg80211_rtw_change_beacon(struct wiphy *wiphy, struct net_device *ndev,
-		struct cfg80211_beacon_data *info)
+		struct cfg80211_ap_update *ap_update)
 {
 	int ret = 0;
 	_adapter *adapter = (_adapter *)rtw_netdev_priv(ndev);
 
 	RTW_INFO(FUNC_NDEV_FMT"\n", FUNC_NDEV_ARG(ndev));
 
-	ret = rtw_add_beacon(adapter, info->head, info->head_len, info->tail, info->tail_len);
+	// 你需要根据新的 ap_update 结构体的字段来修改函数调用
+	ret = rtw_add_beacon(adapter, ap_update->beacon.head, ap_update->beacon.head_len, 
+		ap_update->beacon.tail, ap_update->beacon.tail_len);
 
 	return ret;
 }
+
+
+// static int cfg80211_rtw_change_beacon(struct wiphy *wiphy, struct net_device *ndev,
+// 		struct cfg80211_beacon_data *info)
+// {
+// 	int ret = 0;
+// 	_adapter *adapter = (_adapter *)rtw_netdev_priv(ndev);
+
+// 	RTW_INFO(FUNC_NDEV_FMT"\n", FUNC_NDEV_ARG(ndev));
+
+// 	ret = rtw_add_beacon(adapter, info->head, info->head_len, info->tail, info->tail_len);
+
+// 	return ret;
+// }
 
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 19, 2))
 static int cfg80211_rtw_stop_ap(struct wiphy *wiphy, struct net_device *ndev, unsigned int link_id)
