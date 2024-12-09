@@ -1,3 +1,7 @@
+修改```https://gitee.com/BrightXu/rtl8192fu```仓库适配ubuntu24.04,linux内核6.8.0
+使用帮助```https://blog.csdn.net/Finddog/article/details/144344696```
+
+以下是原来的说明文档
 # Realtek 8192FU Linux USB无线网卡驱动
 
 [![GitHub license](https://img.shields.io/badge/license-GPL--2.0-orange.svg)](LICENSE)
