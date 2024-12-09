@@ -1,3 +1,5 @@
+# Realtek 8192FU Linux USB无线网卡驱动
+在原来的基础上，增加了对 Linux 内核`6.8.0` ubuntu24.04的支持
 修改```https://gitee.com/BrightXu/rtl8192fu```仓库适配ubuntu24.04,linux内核6.8.0
 使用帮助```https://blog.csdn.net/Finddog/article/details/144344696```
 
