@@ -217,3 +217,24 @@ sudo modprobe -r 8192fu
 sudo ./dkms-remove.sh
 ```
 
+
+## 对于部分无线网卡插入后为DISK模式  
+  
+有些无线网卡存储了 Windows 系统的驱动，Linux 会认为是优盘，所以需要切换一下供应商和产品 id，从优盘变为网卡
+
+输入`lsusb`，  
+返回:`Bus 001 Device 014: ID 0bda:a192 Realtek Semiconductor Corp. DISK`.  
+只需要输入:`sudo usb_modeswitch -KW -v 0bda -p a192`就可以解决了.  
+  
+但是在重新插拔、换了接口位置或者重启系统之后，还得手动切换模式才行.
+
+在 `lib/udev/rules.d/40-usb_modeswitch.rules` 中追加指令  
+
+`sudo vim lib/udev/rules.d/40-usb_modeswitch.rules`
+
+```
+# Realtek 8192F Wifi AC USB  
+ATTR{idVendor}=="0bda", ATTR{idProduct}=="a192", RUN+="/usr/sbin/usb_modeswitch -K -v 0bda -p a192"  
+```
+
+保存退出，就可以愉快的使用了。
