@@ -1,4 +1,7 @@
 # Realtek 8192FU Linux USB无线网卡驱动
+
+**已经添加支持TP-LINK WN823N免驱版.**
+  
 在原来的基础上，增加了对 Linux 内核`6.8.0` ubuntu24.04的支持
 修改```https://gitee.com/BrightXu/rtl8192fu```仓库适配ubuntu24.04,linux内核6.8.0
 使用帮助```https://blog.csdn.net/Finddog/article/details/144344696```
@@ -31,7 +34,7 @@
 
 ---
 
-> 经过多次修改后，在原来的基础上，增加了对 Linux 内核`5.2 ~ 5.19 / 6.0 / 6.1` 的支持，以及对 `RHEL`/`CentOS` `7.x`/`8.x`的支持。
+> 经过多次修改后，在原来的基础上，增加了对 Linux 内核`5.2 ~ 5.19 / 6.0 / 6.1 / 6.8.0` 的支持，以及对 `RHEL`/`CentOS` `7.x`/`8.x`的支持。
 
 目前已测试的Linux发行版及结果：
 
@@ -41,8 +44,8 @@
   * `Rocky Linux 8.4/8.5/8.6/9.0`;
   * `Fedora 36-1.5`;
   * `Ubuntu Server 16.04/18.04/20.04/21.04/21.10/22.04`;
-  * `Ubuntu Desktop 18.04/20.04`;
-  * `linux mint 20.1`;
+  * `Ubuntu Desktop 18.04/20.04/22.04/24.04`;
+  * `linux mint 20.1/22.1`;
   * `kali 2021.1`;
   * `archlinux 2021.09.01/2022.06.01/2022.08.05/2022.10.01`;
 
